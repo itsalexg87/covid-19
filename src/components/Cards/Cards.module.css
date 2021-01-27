@@ -10,6 +10,12 @@
 .infected {
 	border-top: 10px solid rgba(0, 0, 255, 0.5);
 	border-bottom: 10px solid rgba(0, 0, 255, 0.5);
+	color: rgba(0, 0, 255, 0.5);
+}
+
+.active {
+	border-top: 10px solid rgba(255, 136, 0, 0.5);
+	border-bottom: 10px solid rgba(255, 136, 0, 0.5);
 }
 
 .recovered {

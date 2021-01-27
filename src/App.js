@@ -4,7 +4,7 @@ import { Cards, Chart, CountryPicker } from './components';
 import styles from './App.module.css';
 import { fetchData } from './api';
 
-import image from './images/image.png';
+import { Typography } from '@material-ui/core';
 
 // export const setData = async data => {
 // 	await this.setState({ data });
@@ -27,8 +27,13 @@ class App extends Component {
 		const { data, country } = this.state;
 		return (
 			<div className={styles.container}>
-				<img src={image} alt='COVID-19' className={styles.image} />
 				<Cards data={data} country={country} />
+				<Typography variant='body2' gutterBottom style={{ marginBottom: '20px' }}>
+					Data fetched from{' '}
+					<a href='https://covid19.mathdro.id/api' target='_blank' rel='noreferrer'>
+						https://covid19.mathdro.id/api
+					</a>
+				</Typography>
 				<CountryPicker handleCountryChange={this.handleCountryChange} />
 				<Chart data={data} country={country} />
 			</div>

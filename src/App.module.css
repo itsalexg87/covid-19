@@ -2,6 +2,11 @@ body {
 	background-color: rgb(250, 250, 250);
 }
 
+a {
+	text-decoration: none;
+	color: grey;
+}
+
 .container {
 	display: flex;
 	flex-direction: row;
@@ -10,17 +15,8 @@ body {
 	flex-direction: column;
 }
 
-.image {
-	max-width: 300px;
-	margin-top: 20px;
-}
-
 @media (max-width: 770px) {
 	.container {
 		margin: 0 10%;
-	}
-	.image {
-		width: 50%;
-		margin-bottom: 0 !important;
 	}
 }

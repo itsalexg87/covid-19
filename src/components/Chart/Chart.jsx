@@ -1,3 +1,4 @@
+import { red } from '@material-ui/core/colors';
 import React, { useState, useEffect } from 'react';
 import { Line, Bar } from 'react-chartjs-2';
 
@@ -16,6 +17,8 @@ const Chart = ({ data: { confirmed, recovered, deaths }, country }) => {
 		fetchAPI();
 	}, []);
 
+	console.log(dailyData);
+
 	const lineChart =
 		dailyData.length !== 0 ? (
 			<Line
@@ -26,8 +29,10 @@ const Chart = ({ data: { confirmed, recovered, deaths }, country }) => {
 						{
 							data: dailyData.map(({ confirmed }) => confirmed),
 							label: 'Infected',
-							boderColor: '#3333ff',
+							boderColor: 'blue',
+							backgroundColor: 'rgba(0, 0, 255, 0.5)',
 							fill: true,
+							yAxisID: 'infected',
 						},
 						{
 							data: dailyData.map(({ deaths }) => deaths),
@@ -35,8 +40,59 @@ const Chart = ({ data: { confirmed, recovered, deaths }, country }) => {
 							boderColor: 'red',
 							backgroundColor: 'rgba(255, 0, 0, 0.5)',
 							fill: true,
+							yAxisID: 'deaths',
 						},
 					],
+				}}
+				options={{
+					scales: {
+						yAxes: [
+							{
+								ticks: {
+									beginAtZero: true,
+									stepSize: 10000000,
+
+									// Return an empty string to draw the tick line but hide the tick label
+									// Return `null` or `undefined` to hide the tick line entirely
+									userCallback: function (value, index, values) {
+										// Convert the number to a string and splite the string every 3 charaters from the end
+										value = value.toString();
+										value = value.split(/(?=(?:...)*$)/);
+
+										// Convert the array to a string and format the output
+										value = value.join('.');
+										return value;
+									},
+								},
+								id: 'infected',
+								type: 'linear',
+								stacked: true,
+								scaleLabel: { display: true, labelString: 'Infected', fontColor: '#3333ff' },
+							},
+							{
+								ticks: {
+									beginAtZero: true,
+									stepSize: 500000,
+
+									// Return an empty string to draw the tick line but hide the tick label
+									// Return `null` or `undefined` to hide the tick line entirely
+									userCallback: function (value, index, values) {
+										// Convert the number to a string and splite the string every 3 charaters from the end
+										value = value.toString();
+										value = value.split(/(?=(?:...)*$)/);
+
+										// Convert the array to a string and format the output
+										value = value.join('.');
+										return value;
+									},
+								},
+								id: 'deaths',
+								type: 'linear',
+								position: 'right',
+								scaleLabel: { display: true, labelString: 'Deaths', fontColor: 'rgba(255, 0, 0, 0.5)' },
+							},
+						],
+					},
 				}}
 			/>
 		) : null;

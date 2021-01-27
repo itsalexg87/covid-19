@@ -4,6 +4,15 @@
 	width: 50%;
 }
 
+@media (max-width: 1800px) {
+	.container {
+		width: 60% !important;
+	}
+	.chart {
+		width: 100%;
+	}
+}
+
 @media (max-width: 770px) {
 	.container {
 		width: 100% !important;

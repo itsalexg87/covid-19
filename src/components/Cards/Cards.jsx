@@ -1,66 +1,54 @@
 import React from 'react';
-import styles from './Cards.module.css';
-import { Card, CardContent, Typography, Grid } from '@material-ui/core';
-
-import CountUp from 'react-countup';
 import cx from 'classnames';
+
+import { Grid } from '@material-ui/core';
+import styles from './Cards.module.css';
+
+import CardTemplate from './CardTemplate';
 
 const Cards = ({ data: { confirmed, recovered, deaths, lastUpdate }, country }) => {
 	if (!confirmed) {
 		return 'Loading ...';
 	}
 	console.log(country);
+
+	const activeCases = confirmed.value - recovered.value - deaths.value;
+
 	return (
 		<div className={styles.container}>
 			<Grid container spacing={3} justify='center'>
-				<Grid item component={Card} xs={12} md={3} className={cx(styles.card, styles.infected)}>
-					<CardContent>
-						<Typography variant='h6' color='textSecondary' gutterBottom>
-							Infected
-						</Typography>
-						<Typography variant='h5'>
-							<CountUp start={0} end={confirmed.value} duration={1.5} separator='.' />
-						</Typography>
-						<Typography variant='body2' color='textSecondary'>
-							{new Date(lastUpdate).toLocaleDateString()}
-						</Typography>
-						<Typography variant='body1' className={styles.numberOf}>
-							Number of active cases of COVID-19
-						</Typography>
-					</CardContent>
-				</Grid>
-				<Grid item component={Card} xs={12} md={3} className={cx(styles.card, styles.recovered)}>
-					<CardContent>
-						<Typography variant='h6' color='textSecondary' gutterBottom>
-							Recovered
-						</Typography>
-						<Typography variant='h5'>
-							<CountUp start={0} end={recovered.value} duration={1.5} separator='.' />
-						</Typography>
-						<Typography variant='body2' color='textSecondary'>
-							{new Date(lastUpdate).toLocaleDateString()}
-						</Typography>
-						<Typography variant='body1' className={styles.numberOf}>
-							Number of recoveries from COVID-19
-						</Typography>
-					</CardContent>
-				</Grid>
-				<Grid item component={Card} xs={12} md={3} className={cx(styles.card, styles.deaths)}>
-					<CardContent>
-						<Typography variant='h6' color='textSecondary' gutterBottom>
-							Deaths
-						</Typography>
-						<Typography variant='h5'>
-							<CountUp start={0} end={deaths.value} duration={1.5} separator='.' />
-						</Typography>
-						<Typography variant='body2' color='textSecondary'>
-							{new Date(lastUpdate).toLocaleDateString()}
-						</Typography>
-						<Typography variant='body1' className={styles.numberOf}>
-							Number of deaths caused by COVID-19
-						</Typography>
-					</CardContent>
-				</Grid>
+				<CardTemplate
+					cN={cx(styles.card, styles.infected)}
+					name='Total Infected'
+					value={confirmed.value}
+					lastUpdate={lastUpdate}
+					colorText='rgba(0, 0, 255, 1)'
+					description='All Cases from the beginning of COVID-19'
+				/>
+				<CardTemplate
+					cN={cx(styles.card, styles.active)}
+					name='Active Cases'
+					value={activeCases}
+					lastUpdate={lastUpdate}
+					colorText=' rgba(255, 136, 0, 1)'
+					description='Number of active cases of COVID-19'
+				/>
+				<CardTemplate
+					cN={cx(styles.card, styles.recovered)}
+					name='Recovered'
+					value={recovered.value}
+					lastUpdate={lastUpdate}
+					colorText='rgba(0, 255, 0, 1)'
+					description='Number of recoveries from COVID-19'
+				/>
+				<CardTemplate
+					cN={cx(styles.card, styles.deaths)}
+					name='Deaths'
+					value={deaths.value}
+					lastUpdate={lastUpdate}
+					colorText=' rgba(255, 0, 0, 1)'
+					description='Number of deaths caused by COVID-19'
+				/>
 			</Grid>
 		</div>
 	);
