@@ -39,4 +39,7 @@
 	.card {
 		margin: 2% !important;
 	}
+	.container {
+		margin-top: 20px;
+	}
 }
