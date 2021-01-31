@@ -16,8 +16,6 @@ const Chart = ({ data: { confirmed, recovered, deaths }, country }) => {
 		fetchAPI();
 	}, []);
 
-	console.log(dailyData);
-
 	const lineChart =
 		dailyData.length !== 0 ? (
 			<Line
@@ -50,45 +48,29 @@ const Chart = ({ data: { confirmed, recovered, deaths }, country }) => {
 								ticks: {
 									beginAtZero: true,
 									stepSize: 10000000,
-
-									// Return an empty string to draw the tick line but hide the tick label
-									// Return `null` or `undefined` to hide the tick line entirely
 									userCallback: function (value, index, values) {
-										// Convert the number to a string and splite the string every 3 charaters from the end
-										value = value.toString();
-										value = value.split(/(?=(?:...)*$)/);
-
-										// Convert the array to a string and format the output
-										value = value.join('.');
+										value = value.toString() / 1000000;
 										return value;
 									},
 								},
 								id: 'infected',
 								type: 'linear',
 								stacked: true,
-								scaleLabel: { display: true, labelString: 'Infected', fontColor: '#3333ff' },
+								scaleLabel: { display: true, labelString: 'Infected (MM)', fontColor: '#3333ff' },
 							},
 							{
 								ticks: {
 									beginAtZero: true,
 									stepSize: 500000,
-
-									// Return an empty string to draw the tick line but hide the tick label
-									// Return `null` or `undefined` to hide the tick line entirely
 									userCallback: function (value, index, values) {
-										// Convert the number to a string and splite the string every 3 charaters from the end
-										value = value.toString();
-										value = value.split(/(?=(?:...)*$)/);
-
-										// Convert the array to a string and format the output
-										value = value.join('.');
+										value = value.toString() / 1000000;
 										return value;
 									},
 								},
 								id: 'deaths',
 								type: 'linear',
 								position: 'right',
-								scaleLabel: { display: true, labelString: 'Deaths', fontColor: 'rgba(255, 0, 0, 0.5)' },
+								scaleLabel: { display: true, labelString: 'Deaths (MM)', fontColor: 'rgba(255, 0, 0, 0.5)' },
 							},
 						],
 					},
