@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
 
 import { Cards, Chart, CountryPicker } from './components';
-import styles from './App.module.css';
 import { fetchData } from './api';
+import styles from './App.module.css';
 
 import { Typography } from '@material-ui/core';
-
-// export const setData = async data => {
-// 	await this.setState({ data });
-// };
 
 class App extends Component {
 	state = { data: {}, country: '' };
